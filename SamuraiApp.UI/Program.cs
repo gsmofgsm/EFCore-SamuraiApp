@@ -15,11 +15,23 @@ namespace SamuraiApp.UI
             // press F5 to start debugging
             // do right click to set this project as startup project herebefore
             _context.Database.EnsureCreated(); // This causes EFcore to read the provider and connection string, check if the db exists, and creates it on the fly
-            
-            AddSamuraisByName("Shimada", "Okamoto", "Kikuchio", "Hayashida");
+
+            // AddSamuraisByName("Shimada", "Okamoto", "Kikuchio", "Hayashida");
             // GetSamurais();
+            AddVariousTypes();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void AddVariousTypes()
+        {
+            _context.Samurais.AddRange(
+                new Samurai { Name = "Shimada" },
+                new Samurai { Name = "Okamoto" });
+            _context.Battles.AddRange(
+                new Battle { Name = "Battle of Anegawa" },
+                new Battle { Name = "Battle of Nagashino" });
+            _context.SaveChanges();
         }
 
         private static void AddSamuraisByName(params string[] names)
