@@ -25,12 +25,16 @@ namespace SamuraiApp.UI
 
         private static void AddVariousTypes()
         {
-            _context.Samurais.AddRange(
-                new Samurai { Name = "Shimada" },
-                new Samurai { Name = "Okamoto" });
-            _context.Battles.AddRange(
-                new Battle { Name = "Battle of Anegawa" },
-                new Battle { Name = "Battle of Nagashino" });
+            _context.AddRange(new Samurai { Name = "Shimada" },
+                              new Samurai { Name = "Okamoto" },
+                              new Battle { Name = "Battle of Anegawa" },
+                              new Battle { Name = "Battle of Nagashino" });
+            //_context.Samurais.AddRange(
+            //    new Samurai { Name = "Shimada" },
+            //    new Samurai { Name = "Okamoto" });
+            //_context.Battles.AddRange(
+            //    new Battle { Name = "Battle of Anegawa" },
+            //    new Battle { Name = "Battle of Nagashino" });
             _context.SaveChanges();
         }
 
