@@ -10,6 +10,6 @@ namespace SamuraiApp.Domain
     {
         public int SamuraiId { get; set; }
         public int BattleId { get; set; }
-        public DateTime DateJoined { get; set; } // payload
+        public DateTime DateJoined { get; set; } // payload added, so the default Skip Join won't do. We need to configure OnModelCreating
     }
 }
