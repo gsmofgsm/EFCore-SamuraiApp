@@ -32,9 +32,25 @@ namespace SamuraiApp.UI
 
             //InsertNewSamuraiWithAQuote();
             //InsertNewSamuraiWithManyQuotes();
-            AddQuoteToExistingSamuraiWhileTracked();
+            //AddQuoteToExistingSamuraiWhileTracked();
+            AddQuoteToExistingSamuraiNotTracked(1);
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void AddQuoteToExistingSamuraiNotTracked(int samuraiId)
+        {
+            var samurai = _contextNT.Samurais.Find(samuraiId);
+            samurai.Quotes.Add(new Quote
+            {
+                Text = "Now that I saved you, will you feed me dinner?"
+            });
+            using (var newContext = new SamuraiContext())
+            {
+                //newContext.Samurais.Update(samurai);  // this will update samurai as well
+                newContext.Samurais.Attach(samurai);    // this will not update samurai
+                newContext.SaveChanges();
+            }
         }
 
         private static void AddQuoteToExistingSamuraiWhileTracked()
