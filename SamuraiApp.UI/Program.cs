@@ -56,8 +56,8 @@ namespace SamuraiApp.UI
 
         private static void AddAllSamuraisToAllBattles()
         {
-            var allBattles = _context.Battles.ToList();
-            var allSamurais = _context.Samurais.Where(s => s.Id != 18).ToList();
+            var allBattles = _context.Battles.Include(b => b.Samurais).ToList(); // eager load so changeTracker knows what are changed, but be careful performance issue
+            var allSamurais = _context.Samurais.ToList();
             foreach (var battle in allBattles)
             {
                 battle.Samurais.AddRange(allSamurais);
