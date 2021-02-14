@@ -25,9 +25,31 @@ namespace SamuraiApp.UI
             //RetrieveAndUpdateSamurai();
             //RetrieveAndUpdateMultipleSamurais();
             //MultipleDatabaseOperations();
-            RetrieveAndDeleteASamurai();
+            //RetrieveAndDeleteASamurai();
+
+            QueryAndUpdateBattles_Disconnected();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void QueryAndUpdateBattles_Disconnected()
+        {
+            List<Battle> disconnectedBattles;
+            using (var context1 = new SamuraiContext())
+            {
+                disconnectedBattles = context1.Battles.ToList();
+            } // context1 is disposed
+            disconnectedBattles.ForEach(b =>
+            {
+                b.StartDate = new DateTime(1570, 01, 01);
+                b.EndDate = new DateTime(1570, 12, 1);
+            });
+
+            using (var context2 = new SamuraiContext())
+            {
+                context2.UpdateRange(disconnectedBattles);   // you must call update in a disconnected context
+                context2.SaveChanges();   // name get also updated in sql, because EF core knows about the update, but not what get updated
+            }
         }
 
         private static void RetrieveAndDeleteASamurai()
