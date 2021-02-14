@@ -23,9 +23,18 @@ namespace SamuraiApp.UI
             //QueryFilters();
             //QueryAggregates();
             //RetrieveAndUpdateSamurai();
-            RetrieveAndUpdateMultipleSamurais();
+            //RetrieveAndUpdateMultipleSamurais();
+            MultipleDatabaseOperations();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void MultipleDatabaseOperations()
+        {
+            var samurai = _context.Samurais.FirstOrDefault();
+            samurai.Name += "San";
+            _context.Samurais.Add(new Samurai { Name = "Shino" });
+            _context.SaveChanges();
         }
 
         private static void RetrieveAndUpdateMultipleSamurais()
