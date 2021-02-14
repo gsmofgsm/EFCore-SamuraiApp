@@ -49,9 +49,29 @@ namespace SamuraiApp.UI
             //AddingNewSamuraiToAnExistingBattle();
             //ReturnBattleWithSamurais();
             //ReturnAllBattlesWithSamurais();
-            AddAllSamuraisToAllBattles();
+            //AddAllSamuraisToAllBattles();
+            //WillNotRemoveSamuraiFromABattle();
+            RemoveSamuraiFromABattle();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void RemoveSamuraiFromABattle()
+        {
+            var battleWithSamurai = _context.Battles
+                .Include(b => b.Samurais.Where(s => s.Id == 12))
+                .Single(s => s.BattleId == 1);
+            var samurai = battleWithSamurai.Samurais[0];
+            battleWithSamurai.Samurais.Remove(samurai);
+            _context.SaveChanges();
+        }
+
+        private static void WillNotRemoveSamuraiFromABattle()
+        {
+            var battle = _context.Battles.Find(1);
+            var samurai = _context.Samurais.Find(12);
+            battle.Samurais.Remove(samurai);
+            _context.SaveChanges(); // the relationship is not being tracked, so nothing gets removed
         }
 
         private static void AddAllSamuraisToAllBattles()
