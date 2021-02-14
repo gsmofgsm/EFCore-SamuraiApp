@@ -37,9 +37,24 @@ namespace SamuraiApp.UI
             //Simpler_AddQuoteToExistingSamuraiNotTracked(2);
 
             //EagerLoadSamuraiWithQuotes();
-            ProjectSomeProperties();
+            //ProjectSomeProperties();
+            ProjectSamuraisWithQuotes();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void ProjectSamuraisWithQuotes()
+        {
+            //var somePropsWithQuotes = _context.Samurais
+                //.Select(s => new { s.Id, s.Name, s.Quotes })
+                //.Select(s => new { s.Id, s.Name, NumberOfQuotes = s.Quotes.Count })
+                //.Select(s => new { s.Id, s.Name, HappyQuotes = s.Quotes.Where(q => q.Text.Contains("happy")) })
+                //.ToList();
+
+            var samuraisAndQuotes = _context.Samurais
+                .Select(s => new { Samurai = s, HappyQuotes = s.Quotes.Where(q => q.Text.Contains("happy")) })
+                .ToList();
+            var firstSamurai = samuraisAndQuotes[0].Samurai.Name += " The happiest";
         }
 
         private static void ProjectSomeProperties()
