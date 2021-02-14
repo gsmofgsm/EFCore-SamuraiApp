@@ -22,9 +22,19 @@ namespace SamuraiApp.UI
             //AddVariousTypes();
             //QueryFilters();
             //QueryAggregates();
-            RetrieveAndUpdateSamurai();
+            //RetrieveAndUpdateSamurai();
+            RetrieveAndUpdateMultipleSamurais();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void RetrieveAndUpdateMultipleSamurais()
+        {
+            var samurais = _context.Samurais.Skip(1).Take(4).ToList();
+            PrintSamurais(samurais);
+            samurais.ForEach(s => s.Name += "San");
+            PrintSamurais(samurais);
+            _context.SaveChanges();
         }
 
         private static void RetrieveAndUpdateSamurai()
