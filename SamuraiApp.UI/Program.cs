@@ -43,9 +43,23 @@ namespace SamuraiApp.UI
             //ExplicitLoadQuotes();
 
             //FilteringWithRelatedData();
-            ModifyingRelatedDataWhenTracked();
+            //ModifyingRelatedDataWhenTracked();
+            ModifyingRelatedDataWhenNotTracked();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void ModifyingRelatedDataWhenNotTracked()
+        {
+            var samurai = _context.Samurais.Include(s => s.Quotes)  // eager loading
+                .FirstOrDefault(s => s.Id == 1);
+            var quote = samurai.Quotes[0];
+            quote.Text += "Did you hear that again?";
+
+            using var newContext = new SamuraiContext();
+            //newContext.Quotes.Update(quote); // all quotes of that samurai get updated!
+            newContext.Entry(quote).State = EntityState.Modified; // only this quote gets updated
+            newContext.SaveChanges();
         }
 
         private static void ModifyingRelatedDataWhenTracked()
