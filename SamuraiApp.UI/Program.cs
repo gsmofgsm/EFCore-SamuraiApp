@@ -38,9 +38,23 @@ namespace SamuraiApp.UI
 
             //EagerLoadSamuraiWithQuotes();
             //ProjectSomeProperties();
-            ProjectSamuraisWithQuotes();
+            //ProjectSamuraisWithQuotes();
+
+            ExplicitLoadQuotes();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void ExplicitLoadQuotes()
+        {
+            // make sure there's a horse in the DB, then clear the context's change tracker
+            _context.Set<Horse>().Add(new Horse { SamuraiId = 1, Name = "Mr. Ed" });
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+            // ------
+            var samurai = _context.Samurais.Find(1);
+            _context.Entry(samurai).Collection(s => s.Quotes).Load();
+            _context.Entry(samurai).Reference(s => s.Horse).Load();
         }
 
         private static void ProjectSamuraisWithQuotes()
