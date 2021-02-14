@@ -34,9 +34,17 @@ namespace SamuraiApp.UI
             //InsertNewSamuraiWithManyQuotes();
             //AddQuoteToExistingSamuraiWhileTracked();
             //AddQuoteToExistingSamuraiNotTracked(1);
-            Simpler_AddQuoteToExistingSamuraiNotTracked(2);
+            //Simpler_AddQuoteToExistingSamuraiNotTracked(2);
+
+            EagerLoadSamuraiWithQuotes();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void EagerLoadSamuraiWithQuotes()
+        {
+            var samuraiWithQuotes = _context.Samurais.Include(s => s.Quotes).ToList();  // uses LeftJoin
+            //var splitQuery = _context.Samurais.AsSplitQuery().Include(s => s.Quotes).ToList(); // select from samurais, then inner join
         }
 
         private static void Simpler_AddQuoteToExistingSamuraiNotTracked(int samuraiId)
