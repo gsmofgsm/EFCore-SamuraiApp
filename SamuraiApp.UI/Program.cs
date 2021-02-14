@@ -43,8 +43,9 @@ namespace SamuraiApp.UI
 
         private static void EagerLoadSamuraiWithQuotes()
         {
-            var samuraiWithQuotes = _context.Samurais.Include(s => s.Quotes).ToList();  // uses LeftJoin
+            //var samuraiWithQuotes = _context.Samurais.Include(s => s.Quotes).ToList();  // uses LeftJoin
             //var splitQuery = _context.Samurais.AsSplitQuery().Include(s => s.Quotes).ToList(); // select from samurais, then inner join
+            var filteredInclude = _context.Samurais.Include(s => s.Quotes.Where(q => q.Text.Contains("Thanks"))).ToList();
         }
 
         private static void Simpler_AddQuoteToExistingSamuraiNotTracked(int samuraiId)
