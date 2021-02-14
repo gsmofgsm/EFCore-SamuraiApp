@@ -24,9 +24,20 @@ namespace SamuraiApp.UI
             //QueryAggregates();
             //RetrieveAndUpdateSamurai();
             //RetrieveAndUpdateMultipleSamurais();
-            MultipleDatabaseOperations();
+            //MultipleDatabaseOperations();
+            RetrieveAndDeleteASamurai();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void RetrieveAndDeleteASamurai()
+        {
+            var samurai = _context.Samurais.Find(15);  // let context know and start tracking it
+            PrintSamurais(samurai);
+            _context.Samurais.Remove(samurai);         // delete
+            PrintSamurais(samurai);
+            _context.SaveChanges();                    // SaveChanges
+            PrintSamurais(samurai);  // 15 Shino - so you can still print it after deleted
         }
 
         private static void MultipleDatabaseOperations()
@@ -114,13 +125,20 @@ namespace SamuraiApp.UI
             Console.WriteLine($"Samurai count is {samurais.Count}");
             foreach (var samurai in samurais)
             {
-                Console.WriteLine(samurai.Name);
+                PrintSamurais(samurai);
             }
         }
 
         private static void PrintSamurais(Samurai samurai)
         {
-            Console.WriteLine($"{samurai.Id} - {samurai.Name}");
+            if (samurai == null)
+            {
+                Console.WriteLine("samurai not found");
+            }
+            else
+            {
+                Console.WriteLine($"{samurai.Id} - {samurai.Name}");
+            }
         }
     }
 }
