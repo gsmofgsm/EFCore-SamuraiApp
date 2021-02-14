@@ -33,9 +33,18 @@ namespace SamuraiApp.UI
             //InsertNewSamuraiWithAQuote();
             //InsertNewSamuraiWithManyQuotes();
             //AddQuoteToExistingSamuraiWhileTracked();
-            AddQuoteToExistingSamuraiNotTracked(1);
+            //AddQuoteToExistingSamuraiNotTracked(1);
+            Simpler_AddQuoteToExistingSamuraiNotTracked(2);
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void Simpler_AddQuoteToExistingSamuraiNotTracked(int samuraiId)
+        {
+            var quote = new Quote { Text = "Thanks for dinner!", SamuraiId = samuraiId };
+            using var newContext = new SamuraiContext();
+            newContext.Quotes.Add(quote);
+            newContext.SaveChanges();
         }
 
         private static void AddQuoteToExistingSamuraiNotTracked(int samuraiId)
