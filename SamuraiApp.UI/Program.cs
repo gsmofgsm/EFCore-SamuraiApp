@@ -28,9 +28,25 @@ namespace SamuraiApp.UI
             //MultipleDatabaseOperations();
             //RetrieveAndDeleteASamurai();
 
-            QueryAndUpdateBattles_Disconnected();
+            //QueryAndUpdateBattles_Disconnected();
+
+            InsertNewSamuraiWithAQuote();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void InsertNewSamuraiWithAQuote()
+        {
+            var samurai = new Samurai
+            {
+                Name = "Kambei Shimada",
+                Quotes = new List<Quote>
+                {
+                    new Quote { Text = "I've come to save you" }
+                }
+            };
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
         }
 
         private static void QueryAndUpdateBattles_Disconnected()
