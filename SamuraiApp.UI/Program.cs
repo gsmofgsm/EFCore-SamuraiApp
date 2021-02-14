@@ -42,9 +42,18 @@ namespace SamuraiApp.UI
 
             //ExplicitLoadQuotes();
 
-            FilteringWithRelatedData();
+            //FilteringWithRelatedData();
+            ModifyingRelatedDataWhenTracked();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void ModifyingRelatedDataWhenTracked()
+        {
+            var samurai = _context.Samurais.Include(s => s.Quotes)  // eager loading
+                .FirstOrDefault(s => s.Id == 2);
+            samurai.Quotes[0].Text = "Did you hear that?";  // if quotes not loaded, get index out of range error
+            _context.SaveChanges();
         }
 
         private static void FilteringWithRelatedData()
