@@ -20,9 +20,21 @@ namespace SamuraiApp.UI
             // AddSamuraisByName("Shimada", "Okamoto", "Kikuchio", "Hayashida");
             // GetSamurais();
             //AddVariousTypes();
-            QueryFilters();
+            //QueryFilters();
+            QueryAggregates();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void QueryAggregates()
+        {
+            var name = "Sampson";
+            //var samurai = _context.Samurais.Where(s => s.Name == name).FirstOrDefault();
+            var samurai = _context.Samurais.FirstOrDefault(s => s.Name == name);
+            PrintSamurais(samurai);
+            samurai = _context.Samurais.Find(2);  // this isn't a Linq query, it is a DbSet method that gets executed directly
+                                                  // if key is found in change tracker, avoids unneeded db query
+            PrintSamurais(samurai);
         }
 
         private static void QueryFilters()
@@ -74,6 +86,11 @@ namespace SamuraiApp.UI
             {
                 Console.WriteLine(samurai.Name);
             }
+        }
+
+        private static void PrintSamurais(Samurai samurai)
+        {
+            Console.WriteLine($"{samurai.Id} - {samurai.Name}");
         }
     }
 }
