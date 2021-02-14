@@ -44,9 +44,18 @@ namespace SamuraiApp.UI
 
             //FilteringWithRelatedData();
             //ModifyingRelatedDataWhenTracked();
-            ModifyingRelatedDataWhenNotTracked();
+            //ModifyingRelatedDataWhenNotTracked();
+
+            AddingNewSamuraiToAnExistingBattle();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void AddingNewSamuraiToAnExistingBattle()
+        {
+            var battle = _context.Battles.FirstOrDefault();
+            battle.Samurais.Add(new Samurai { Name = "Takeda shingen" });
+            _context.SaveChanges();
         }
 
         private static void ModifyingRelatedDataWhenNotTracked()
