@@ -36,9 +36,28 @@ namespace SamuraiApp.UI
             //AddQuoteToExistingSamuraiNotTracked(1);
             //Simpler_AddQuoteToExistingSamuraiNotTracked(2);
 
-            EagerLoadSamuraiWithQuotes();
+            //EagerLoadSamuraiWithQuotes();
+            ProjectSomeProperties();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void ProjectSomeProperties()
+        {
+            var somePropertyies = _context.Samurais.Select(s => new { s.Id, s.Name }).ToList(); // anonymous type
+            var idAndNames = _context.Samurais.Select(s => new IdAndName(s.Id, s.Name)).ToList(); // dynamic type
+        }
+
+        public struct IdAndName
+        {
+            public int Id;
+            public string Name;
+
+            public IdAndName(int id, string name)
+            {
+                Id = id;
+                Name = name;
+            }
         }
 
         private static void EagerLoadSamuraiWithQuotes()
