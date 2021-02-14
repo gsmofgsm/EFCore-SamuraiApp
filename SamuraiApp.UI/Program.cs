@@ -46,9 +46,21 @@ namespace SamuraiApp.UI
             //ModifyingRelatedDataWhenTracked();
             //ModifyingRelatedDataWhenNotTracked();
 
-            AddingNewSamuraiToAnExistingBattle();
+            //AddingNewSamuraiToAnExistingBattle();
+            //ReturnBattleWithSamurais();
+            ReturnAllBattlesWithSamurais();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void ReturnAllBattlesWithSamurais()
+        {
+            var battle = _context.Battles.Include(b => b.Samurais).ToList();
+        }
+
+        private static void ReturnBattleWithSamurais()
+        {
+            var battle = _context.Battles.Include(b => b.Samurais).FirstOrDefault();
         }
 
         private static void AddingNewSamuraiToAnExistingBattle()
