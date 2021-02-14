@@ -40,9 +40,18 @@ namespace SamuraiApp.UI
             //ProjectSomeProperties();
             //ProjectSamuraisWithQuotes();
 
-            ExplicitLoadQuotes();
+            //ExplicitLoadQuotes();
+
+            FilteringWithRelatedData();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void FilteringWithRelatedData()
+        {
+            var samurais = _context.Samurais
+                .Where(s => s.Quotes.Any(q => q.Text.Contains("happy")))  // Quotes won't get returned
+                .ToList();
         }
 
         private static void ExplicitLoadQuotes()
