@@ -2,6 +2,7 @@
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SamuraiApp.UI
@@ -18,9 +19,20 @@ namespace SamuraiApp.UI
 
             // AddSamuraisByName("Shimada", "Okamoto", "Kikuchio", "Hayashida");
             // GetSamurais();
-            AddVariousTypes();
+            //AddVariousTypes();
+            QueryFilters();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void QueryFilters()
+        {
+            //var name = "Sampson";
+            //var samurais = _context.Samurais.Where(s => s.Name == name).ToList(); // parameter is created in sql because search value is in a variable
+            //var samurais = _context.Samurais.Where(s => s.Name == "Sampson").ToList();  // no parameter is created in sql, because search value is directly in query
+
+            var samurais = _context.Samurais.Where(s => EF.Functions.Like(s.Name, "J%")).ToList();
+            PrintSamurais(samurais);
         }
 
         private static void AddVariousTypes()
@@ -52,6 +64,11 @@ namespace SamuraiApp.UI
             var samurais = _context.Samurais
                 .TagWith("ConsoleApp.Program.GetSamurais method")
                 .ToList();
+            PrintSamurais(samurais);
+        }
+
+        private static void PrintSamurais(List<Samurai> samurais)
+        {
             Console.WriteLine($"Samurai count is {samurais.Count}");
             foreach (var samurai in samurais)
             {
