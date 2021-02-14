@@ -48,9 +48,21 @@ namespace SamuraiApp.UI
 
             //AddingNewSamuraiToAnExistingBattle();
             //ReturnBattleWithSamurais();
-            ReturnAllBattlesWithSamurais();
+            //ReturnAllBattlesWithSamurais();
+            AddAllSamuraisToAllBattles();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void AddAllSamuraisToAllBattles()
+        {
+            var allBattles = _context.Battles.ToList();
+            var allSamurais = _context.Samurais.Where(s => s.Id != 18).ToList();
+            foreach (var battle in allBattles)
+            {
+                battle.Samurais.AddRange(allSamurais);
+            }
+            _context.SaveChanges();
         }
 
         private static void ReturnAllBattlesWithSamurais()
