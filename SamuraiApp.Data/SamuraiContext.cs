@@ -2,18 +2,16 @@
 using Microsoft.Extensions.Logging;
 using SamuraiApp.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SamuraiApp.Data
 {
-    public class SamuraiContext: DbContext
+    public class SamuraiContext : DbContext
     {
         public DbSet<Samurai> Samurais { get; set; }
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<Battle> Battles { get; set; }
+
+        public DbSet<SamuraiBattleStat> SamuraiBattleStats { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,6 +37,10 @@ namespace SamuraiApp.Data
             // which is sigular, here we change it to plural
             modelBuilder.Entity<Horse>().ToTable("Horses");
             // The table Will get renamed, so no dat loss
+
+            modelBuilder.Entity<SamuraiBattleStat>()
+                .HasNoKey()  // so EF core won't complain about there is no key, and EF core won't bother tracking any more
+                .ToView("SamuraiBattleStats");  // so EF core knows there is a view alreay, and won't create a new table
         }
     }
 }
