@@ -64,11 +64,23 @@ namespace SamuraiApp.UI
             //QueryUsingRawSql();
             //QueryUsingRawSqlWithInterpolation();
 
-            QueryUsingFromSqlRawStoredProd();
-            QueryUsingFromSqlIntStoredProd();
+            //QueryUsingFromSqlRawStoredProd();
+            //QueryUsingFromSqlIntStoredProd();
+            ExecuteSomeRawSql();
 
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void ExecuteSomeRawSql()
+        {
+            //var samuraiId = 2;
+            //var affected = _context.Database
+            //    .ExecuteSqlRaw("EXEC DeleteQuotesForSamurai {0}", samuraiId); // when using sqlRaw, do remember to pass parameter
+
+            var samuraiId = 2;
+            var affected = _context.Database
+                .ExecuteSqlInterpolated($"EXEC DeleteQuotesForSamurai {samuraiId}");
         }
 
         private static void QueryUsingFromSqlIntStoredProd()
