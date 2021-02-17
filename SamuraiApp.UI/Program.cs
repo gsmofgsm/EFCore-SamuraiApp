@@ -58,10 +58,21 @@ namespace SamuraiApp.UI
             //AddNewHorseToSamuraiObject();
             //AddNewHorseToDisconnectedSamuraiObject();
             //ReplaceAHorse();
-            GetSamuraiWithHorse();
+            //GetSamuraiWithHorse();
+
+            QuerySamuraiBattleStats();
 
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void QuerySamuraiBattleStats()
+        {
+            var stats = _context.SamuraiBattleStats.ToList();
+            var firstStats = _context.SamuraiBattleStats.FirstOrDefault();
+            var sampsonStats = _context.SamuraiBattleStats
+                .FirstOrDefault(b => b.Name == "SampsonSan");
+            var findOne = _context.SamuraiBattleStats.Find(2); // be carefull with find, compiler would be find, but runtime exception because there is no key
         }
 
         private static void GetSamuraiWithHorse()
