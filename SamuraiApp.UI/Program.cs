@@ -51,9 +51,60 @@ namespace SamuraiApp.UI
             //ReturnAllBattlesWithSamurais();
             //AddAllSamuraisToAllBattles();
             //WillNotRemoveSamuraiFromABattle();
-            RemoveSamuraiFromABattle();
+            //RemoveSamuraiFromABattle();
+
+            //AddNewSamuraiWithHorse();
+            //AddNewHorseToSamuraiUsingId();
+            //AddNewHorseToSamuraiObject();
+            //AddNewHorseToDisconnectedSamuraiObject();
+            ReplaceAHorse();
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void ReplaceAHorse()
+        {
+            //var samurai = _context.Samurais.Include(s => s.Horse)
+            //    .FirstOrDefault(s => s.Id == 5);
+            //samurai.Horse = new Horse { Name = "Trigger" };
+            //_context.SaveChanges();
+
+            // horse trading
+            var horse = _context.Set<Horse>().FirstOrDefault(h => h.Name == "Mr. Ed");
+            horse.SamuraiId = 5; // owns Trigger!
+            _context.SaveChanges(); // throws exception
+        }
+
+        private static void AddNewHorseToDisconnectedSamuraiObject()
+        {
+            var samurai = _context.Samurais.AsNoTracking().FirstOrDefault(s => s.Id == 5);
+            samurai.Horse = new Horse { Name = "Mr. Ed" };
+
+            using var newContext = new SamuraiContext();
+            newContext.Samurais.Attach(samurai);
+            newContext.SaveChanges();
+        }
+
+        private static void AddNewHorseToSamuraiObject()
+        {
+            var samurai = _context.Samurais.Find(12); // There is already a samurai in memory
+            samurai.Horse = new Horse { Name = "Black Beauty" };
+            _context.SaveChanges();
+        }
+
+        private static void AddNewHorseToSamuraiUsingId()
+        {
+            var horse = new Horse { Name = "Scount", SamuraiId = 2 };
+            _context.Add(horse);
+            _context.SaveChanges();
+        }
+
+        private static void AddNewSamuraiWithHorse()
+        {
+            var samurai = new Samurai { Name = "Jina Ujichika" };
+            samurai.Horse = new Horse { Name = "Silver" };
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
         }
 
         private static void RemoveSamuraiFromABattle()
