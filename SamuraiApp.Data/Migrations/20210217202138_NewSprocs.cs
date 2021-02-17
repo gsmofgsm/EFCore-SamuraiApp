@@ -10,10 +10,11 @@ namespace SamuraiApp.Data.Migrations
                 @"CREATE PROCEDURE dbo.SamuraisWhoSaidAWord
                     @text VARCHAR(20)
                     AS
-                    SELECT  Samurais.Id, Samurais.Name, Samurais.ClanId
+                    SELECT  Samurais.Id, Samurais.Name
                     FROM    Samurais INNER JOIN
                             Quotes ON Samurais.Id = Quotes.SamuraiId
                     WHERE   (Quotes.Text LIKE '%' + @text + '%')");
+
             migrationBuilder.Sql(
                 @"CREATE PROCEDURE dbo.DeleteQuotesForSamurai
                     @samuraiId int
