@@ -57,9 +57,22 @@ namespace SamuraiApp.UI
             //AddNewHorseToSamuraiUsingId();
             //AddNewHorseToSamuraiObject();
             //AddNewHorseToDisconnectedSamuraiObject();
-            ReplaceAHorse();
+            //ReplaceAHorse();
+            GetSamuraiWithHorse();
+
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void GetSamuraiWithHorse()
+        {
+            var horseonly = _context.Set<Horse>().Find(4);
+            var horseWithSamurai = _context.Samurais.Include(s => s.Horse)
+                .FirstOrDefault(s => s.Horse.Id == 4);
+            var horseSamuraiPairs = _context.Samurais
+                .Where(s => s.Horse != null)
+                .Select(s => new { Horse = s.Horse, Samurai = s })
+                .ToList();
         }
 
         private static void ReplaceAHorse()
