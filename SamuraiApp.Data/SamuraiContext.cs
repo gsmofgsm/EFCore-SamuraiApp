@@ -32,6 +32,13 @@ namespace SamuraiApp.Data
                  bs => bs.HasOne<Samurai>().WithMany())
                 .Property(bs => bs.DateJoined)
                 .HasDefaultValueSql("getdate()");
+
+            // Because we don't have DbSet for Horse
+            // DB can't use DbSet name for db table
+            // it uses class name instead for db table
+            // which is sigular, here we change it to plural
+            modelBuilder.Entity<Horse>().ToTable("Horses");
+            // The table Will get renamed, so no dat loss
         }
     }
 }
