@@ -60,10 +60,28 @@ namespace SamuraiApp.UI
             //ReplaceAHorse();
             //GetSamuraiWithHorse();
 
-            QuerySamuraiBattleStats();
+            //QuerySamuraiBattleStats();
+            //QueryUsingRawSql();
+            QueryUsingRawSqlWithInterpolation();
 
             Console.Write("Press any key...");
             Console.ReadKey();
+        }
+
+        private static void QueryUsingRawSqlWithInterpolation()
+        {
+            string name = "Kikuchyo";
+            var samurais = _context.Samurais
+                .FromSqlInterpolated($"Select * from Samurais Where Name = {name}")
+                .ToList();
+        }
+
+        private static void QueryUsingRawSql()
+        {
+            // must return data for ALL properties of the entity type, no more, no less
+            // Column names in results must match mapped column names
+            // it will be tracked
+            var samurais = _context.Samurais.FromSqlRaw("Select * from samurais").ToList();
         }
 
         private static void QuerySamuraiBattleStats()
