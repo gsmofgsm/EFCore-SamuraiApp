@@ -30,5 +30,12 @@ namespace SamuraiApp.Data
             var dbResult = _context.SaveChanges(); // will save the data that the context is tracking back to the database
             return dbResult;
         }
+
+        public int InsertNewSamurai(Samurai samurai)
+        {
+            _context.Samurais.Add(samurai);
+            var dbResult = _context.SaveChanges();
+            return dbResult;
+        }
     }
 }
