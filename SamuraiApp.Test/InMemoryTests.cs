@@ -2,16 +2,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SamuraiApp.Test
 {
-    class InMemoryTests
+    [TestClass]
+    public class InMemoryTests
     {
         [TestMethod]
         public void CanInsertSamuraiIntoMemory()
